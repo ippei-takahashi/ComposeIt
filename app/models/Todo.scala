@@ -11,15 +11,10 @@ import play.api.libs.functional.syntax._
 
 import scala.slick.lifted.TableQuery
 
-case class Todo(id: Option[Int] = None, description: Option[String] = None, done: Option[Boolean] = None)
+case class Todo(id: Option[Int] = None, description: String, done: Boolean)
 
 object TodoInstances {
-  implicit val todoReads: Reads[Todo] =
-    ((JsPath \ "id").read[Option[Int]] and
-      (JsPath \ "description").read[Option[String]] and
-      (JsPath \ "done").read[Option[Boolean]])(Todo.apply _)
-
-  implicit val todoWrites: Writes[Todo] = Json.writes[Todo]
+  implicit val todoFormat: Format[Todo] = Json.format[Todo]
 }
 
 
@@ -29,7 +24,7 @@ class TodoTable(tag: Tag) extends Table[Todo](tag, "todos") {
   val description = column[String]("description")
   val done = column[Boolean]("done")
 
-  def * = (id.?, description.?, done.?) <>(Todo.tupled, Todo.unapply)
+  def * = (id.?, description, done) <> (Todo.tupled, Todo.unapply)
 }
 
 trait TodoDao {

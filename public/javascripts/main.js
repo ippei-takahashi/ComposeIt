@@ -15,9 +15,10 @@ todo.Todo = function(data) {
 };
 
 //the TodoList class is a list of Todo's
-todo.TodoList = Array;
-todo.TodoList.fetch = function() {
-    m.request({method: "GET", url: "/todo", type: todo.Todo});
+todo.TodoList = function() {
+    return m.request({method: "GET", url: "/todo"}).then(function(list) {
+        return list;
+    });
 };
 todo.TodoList.save = function(todoList) {
     return function() {
@@ -39,7 +40,7 @@ todo.vm = (function() {
     var vm = {}
     vm.init = function() {
         //a running list of todos
-        vm.list = todo.TodoList.fetch() || new todo.TodoList();
+        vm.list = todo.TodoList();
 
         //a slot to store the name of a new todo before it is created
         vm.description = m.prop("");

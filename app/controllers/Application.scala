@@ -3,20 +3,13 @@ package controllers
 import models.DAO._
 import models.Todo
 import models.TodoInstances._
+import play.api.Play.current
 import play.api.db.slick._
 import play.api.libs.json._
 import play.api.mvc._
-import play.api.Play.current
 
 object Application extends Controller {
   def index = Action {
-    implicit def jsUndefinedToNone(jsUndefined: JsNull) = None
-    val json = Json.obj(
-    "id" -> JsNull,
-    "description" -> JsString("aaa"),
-    "done" -> JsBoolean(true)
-    )
-    val todo = Json.fromJson[Todo](json).asOpt
     Ok(views.html.index())
   }
 
