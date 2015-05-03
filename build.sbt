@@ -18,8 +18,4 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "org.scalaz" %% "scalaz-core" % "7.1.1"
 
-libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value
-
-libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.11.1"
-
 unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
